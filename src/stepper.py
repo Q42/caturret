@@ -7,7 +7,7 @@ import threading
 from Adafruit_MotorHAT import Adafruit_MotorHAT
 
 STEP_SIZE = 200
-STEP_SPEED = 150        # Speed of rotation (max = 200?)
+STEP_SPEED = 50        # Speed of rotation (max = 200?)
 
 NUM_STEPS = 10          # 50 = 1/4 circle
 STEP_STYLE = Adafruit_MotorHAT.DOUBLE
