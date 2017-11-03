@@ -1,7 +1,7 @@
 from motion_detector import monitor
 from cateyes import open_eyes, close_eyes
 from pump import start_spray, stop_spray
-from stepper import init, move_steppers, return_steppers
+from stepper import init, move_steppers, return_steppers, demo_steppers
 
 LED_PIN = 18
 RELAIS_PIN = 11
