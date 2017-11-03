@@ -3,7 +3,7 @@
 from time import sleep
 from gpiozero import LED
 
-led = LED(18)  # Add some ambient light for crispier picture :-)
+led = LED(18)
 
 def toggle_light(status):
     led.on() if status else led.off()
