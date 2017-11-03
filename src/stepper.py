@@ -1,10 +1,11 @@
-# -*- coding: utf-8 -*-
-#!/usr/bin/python
-from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
+"""This module moves the stepper motors"""
 
 import time
 import atexit
 import threading
+
+from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
+
 
 # Motor settings
 STEP_SIZE = 200
@@ -80,6 +81,11 @@ def moveVertical(steps):
 def returnSteppers():
         moveHorizontal(lastX * -1)
         moveVertical(lastY * -1)
+
+if __name__ == "__main__":
+    moveSteppers(50, 50)
+    sleep(2)
+    returnSteppers()
 
 
 #while True:
