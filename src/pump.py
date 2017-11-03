@@ -3,12 +3,15 @@
 from time import sleep
 from gpiozero import OutputDevice
 
+# NOTE: the relais uses reverse logic, so on==off
 RELAIS_1 = OutputDevice(11)
 
 
 def toggle_relais(status):
-    RELAIS_1.on() if status else RELAIS_1.off()
-
+    if not status:
+        RELAIS_1.on()
+    else:
+        RELAIS_1.off()
 
 def start_spray():
     toggle_relais(True)
