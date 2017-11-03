@@ -4,13 +4,13 @@ import time
 import cv2
 
 
-def monitor(callback):
+def monitor(callback, w, h):
 
     camera = cv2.VideoCapture(0)
     time.sleep(0.25)
     first_frame = None
-    width = 512
-    height = 288
+    width = w
+    height = h
 
     while True:
         (grabbed, frame) = camera.read()

@@ -5,11 +5,12 @@ from stepper import init, move_steppers, return_steppers
 
 LED_PIN = 18
 RELAIS_PIN = 11
-
+width = 512
+height = 384
 
 def main():
-    init()
-    monitor(on_target)
+    init(width, height)
+    monitor(on_target, width, height)
 
 
 def on_target(target):

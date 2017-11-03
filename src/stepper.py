@@ -16,10 +16,15 @@ last_y = None
 stepper1 = None
 stepper2 = None
 mh = None
+width = None
+height = None
 
 
-def init():
-    global mh, stepper1, stepper2
+def init(w, h):
+    global mh, stepper1, stepper2, width, height
+
+    width = w
+    height = h
     # create a default object, no changes to I2C address or frequency
     mh = Adafruit_MotorHAT(addr=0x60)
 
@@ -46,15 +51,15 @@ def stepper_worker(stepper, num_steps, direction, style):
 
 
 def move_steppers(x, y):
-    global last_y, last_x
+    global last_y, last_x, width, height
     max_horizontal = 25
-    input_max_x = 512
+    input_max_x = width
     steps_x = (x / (input_max_x / (max_horizontal * 2))) - max_horizontal
     last_x = steps_x
 
     # Calculate vertical steps, we start in a 45degree position
     max_vertical = 25
-    input_max_y = 288
+    input_max_y = height
     steps_y = (y / (input_max_y / (max_vertical * 2))) - max_vertical
     last_y = steps_y
 
