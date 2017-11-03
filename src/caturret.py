@@ -4,7 +4,7 @@ from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_Step
 
 import time
 import atexit
- 
+
 # create a default object, no changes to I2C address or frequency
 mh = Adafruit_MotorHAT(addr = 0x60)
 
@@ -14,7 +14,7 @@ def turnOffMotors():
         mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
         mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
         mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
- 
+
 atexit.register(turnOffMotors)
 
 # Adafruit_MotorHAT.FORWARD / Adafruit_MotorHAT.BACKWARD
@@ -25,7 +25,6 @@ def stepper_worker(stepper, numsteps, direction, style):
     #print("Steppin!")
     stepper.step(numsteps, direction, style)
     #print("Done")
-
 
 stepper1 = mh.getStepper(200, 1)       # 200 steps/rev, motor port #1
 
