@@ -51,6 +51,7 @@ def stepper_worker(stepper, num_steps, direction, style):
 
 
 def demo_steppers():
+    global stepper1, stepper2
     st1 = threading.Thread(target=stepper_worker, args=(stepper1, 40, Adafruit_MotorHAT.FORWARD, STEP_STYLE))
     st1.start()
     time.sleep(3)

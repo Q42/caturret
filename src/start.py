@@ -27,4 +27,5 @@ def on_target(target):
 
 if __name__ == "__main__":
     #main()
+    init(100, 100)
     on_target(None)
