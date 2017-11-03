@@ -51,10 +51,10 @@ def stepper_worker(stepper, num_steps, direction, style):
 
 
 def demo_steppers():
-    st1 = threading.Thread(target=stepper_worker, args=(stepper2, 30, Adafruit_MotorHAT.FORWARD, STEP_STYLE))
+    st1 = threading.Thread(target=stepper_worker, args=(stepper1, 40, Adafruit_MotorHAT.FORWARD, STEP_STYLE))
     st1.start()
     time.sleep(3)
-    st2 = threading.Thread(target=stepper_worker, args=(stepper2, 30, Adafruit_MotorHAT.BACKWARD, STEP_STYLE))
+    st2 = threading.Thread(target=stepper_worker, args=(stepper1, 40, Adafruit_MotorHAT.BACKWARD, STEP_STYLE))
     st2.start()
 
 def move_steppers(x, y):
