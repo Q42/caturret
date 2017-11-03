@@ -4,7 +4,7 @@ from time import sleep
 from gpiozero import OutputDevice
 
 # NOTE: the relais uses reverse logic, so on==off
-RELAIS_1 = OutputDevice(11)
+RELAIS_1 = OutputDevice(17)
 
 
 def toggle_relais(status):
