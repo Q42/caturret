@@ -1,3 +1,6 @@
+Adafruit-GPIO==1.0.3
+Adafruit-MotorHAT==1.4.0
+Adafruit-PureIO==0.2.1
 appnope==0.1.0
 backports.functools-lru-cache==1.4
 backports.shutil-get-terminal-size==1.0.0
@@ -14,7 +17,9 @@ numpy==1.13.3
 olefile==0.44
 pathlib2==2.3.0
 pexpect==4.2.1
+picamera==1.13
 pickleshare==0.7.4
+pigpio==1.38
 Pillow==4.3.0
 prompt-toolkit==1.0.15
 ptyprocess==0.5.2
@@ -23,12 +28,11 @@ pyparsing==2.2.0
 python-dateutil==2.6.1
 pytz==2017.2
 PyWavelets==0.5.2
+RPi.GPIO==0.6.3
 scandir==1.6
-scikit-image==0.13.1
-scikit-learn==0.19.0
-scipy==0.19.1
 simplegeneric==0.8.1
 six==1.11.0
+spidev==3.2
 subprocess32==3.2.7
 traitlets==4.3.2
 wcwidth==0.1.7
