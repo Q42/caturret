@@ -7,7 +7,7 @@ import threading
 from Adafruit_MotorHAT import Adafruit_MotorHAT
 
 STEP_SIZE = 200
-STEP_SPEED = 250        # Speed of rotation (max = 200?)
+STEP_SPEED = 150        # Speed of rotation (max = 200?)
 
 NUM_STEPS = 10          # 50 = 1/4 circle
 STEP_STYLE = Adafruit_MotorHAT.DOUBLE
@@ -54,7 +54,7 @@ def demo_steppers():
     global stepper1, stepper2
     st1 = threading.Thread(target=stepper_worker, args=(stepper1, 40, Adafruit_MotorHAT.FORWARD, STEP_STYLE))
     st1.start()
-    time.sleep(1.5)
+    time.sleep(1)
     st2 = threading.Thread(target=stepper_worker, args=(stepper1, 40, Adafruit_MotorHAT.BACKWARD, STEP_STYLE))
     st2.start()
 
