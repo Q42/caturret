@@ -6,101 +6,91 @@ import threading
 
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
 
-#Motor settings
 STEP_SIZE = 200
 STEP_SPEED = 250        # Speed of rotation (max = 200?)
 
 NUM_STEPS = 10          # 50 = 1/4 circle
 STEP_STYLE = Adafruit_MotorHAT.DOUBLE
-global lastX, lastY, stepper1, stepper2, mh
+last_x = None
+last_y = None
+stepper1 = None
+stepper2 = None
+mh = None
+
 
 def init():
-        #
-        # create a default object, no changes to I2C address or frequency
-        mh = Adafruit_MotorHAT(addr = 0x60)
+    global mh, stepper1, stepper2
+    # create a default object, no changes to I2C address or frequency
+    mh = Adafruit_MotorHAT(addr=0x60)
 
-        atexit.register(turnOffMotors)
+    atexit.register(turn_off_motors)
 
-        stepper1 = mh.getStepper(STEP_SIZE, 1)       # 200 steps/rev, motor port #1
-        stepper2 = mh.getStepper(STEP_SIZE, 2)       # 200 steps/rev, motor port #1
+    stepper1 = mh.getStepper(STEP_SIZE, 1)       # 200 steps/rev, motor port #1
+    stepper2 = mh.getStepper(STEP_SIZE, 2)       # 200 steps/rev, motor port #1
 
-        stepper1.setSpeed(STEP_SPEED)
-        stepper2.setSpeed(STEP_SPEED)
+    stepper1.setSpeed(STEP_SPEED)
+    stepper2.setSpeed(STEP_SPEED)
+
 
 # recommended for auto-disabling motors on shutdown!
-def turnOffMotors():
-        mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
-        mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
-        mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
-        mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+def turn_off_motors():
+    global mh
+    mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
+    mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+    mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
+    mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
 
 
-
-# Adafruit_MotorHAT.FORWARD / Adafruit_MotorHAT.BACKWARD
-
-#stepstyles = [Adafruit_MotorHAT.SINGLE, Adafruit_MotorHAT.DOUBLE, Adafruit_MotorHAT.INTERLEAVE, Adafruit_MotorHAT.MICROSTEP]
-
-def stepper_worker(stepper, numsteps, direction, style):
-    #print("Steppin!")
-    stepper.step(numsteps, direction, style)
-    #print("Done")
+def stepper_worker(stepper, num_steps, direction, style):
+    stepper.step(num_steps, direction, style)
 
 
+def move_steppers(x, y):
+    global last_y, last_x
+    max_horizontal = 25
+    input_max_x = 512
+    steps_x = (x / (input_max_x / (max_horizontal * 2))) - max_horizontal
+    last_x = steps_x
 
-def moveSteppers(x, y):
-        #Calculate horizontal steps, max left = 25, max right is 25, 
-        maxHorizontal = 25 #max uitwijking 1 kant op
-        inputMaxX = 512
-        stepsX = (x / (inputMaxX / (maxHorizontal *2))) - maxHorizontal
-        lastX = stepsX
+    # Calculate vertical steps, we start in a 45degree position
+    max_vertical = 25
+    input_max_y = 288
+    steps_y = (y / (input_max_y / (max_vertical * 2))) - max_vertical
+    last_y = steps_y
 
-        #Calculate vertical steps, we start in a 45degree position
-        maxVertical = 25
-        inputMaxY = 288
-        stepsY = (y / (inputMaxY / (maxVertical *2))) - maxVertical
-        lastY = stepsY
+    move_horizontal(steps_x)
+    move_vertical(steps_y)
 
-        moveHorizontal(stepsX)
-        moveVertical(stepsY)
 
-def moveHorizontal(steps):
-        horDirection = Adafruit_MotorHAT.FORWARD
-        if(steps < 0):
-                horDirection = Adafruit_MotorHAT.BACKWARD
-                steps = steps * -1
+def move_horizontal(steps):
+    hor_direction = Adafruit_MotorHAT.FORWARD
+
+    if steps < 0:
+        hor_direction = Adafruit_MotorHAT.BACKWARD
+        steps = steps * -1
         
-        st1 = threading.Thread(target=stepper_worker, args=(stepper1, steps, horDirection, STEP_STYLE))
-        st1.start()
+    st1 = threading.Thread(target=stepper_worker, args=(stepper1, steps, hor_direction, STEP_STYLE))
+    st1.start()
 
-def moveVertical(steps):
-        verDirection = Adafruit_MotorHAT.FORWARD
-        if(steps < 0):
-                verDirection = Adafruit_MotorHAT.BACKWARD
-                steps = steps * -1
+
+def move_vertical(steps):
+    ver_direction = Adafruit_MotorHAT.FORWARD
+
+    if steps < 0:
+        ver_direction = Adafruit_MotorHAT.BACKWARD
+        steps = steps * -1
         
-        st2 = threading.Thread(target=stepper_worker, args=(stepper2, steps, verDirection, STEP_STYLE))
-        st2.start()
+    st2 = threading.Thread(target=stepper_worker, args=(stepper2, steps, ver_direction, STEP_STYLE))
+    st2.start()
         
 
-def returnSteppers():
-        moveHorizontal(lastX * -1)
-        moveVertical(lastY * -1)
+def return_steppers():
+    global last_y, last_x
+    move_horizontal(last_x * -1)
+    move_vertical(last_y * -1)
+
 
 if __name__ == "__main__":
-    moveSteppers(50, 50)
+    move_steppers(50, 50)
     time.sleep(2)
-    returnSteppers()
-
-
-#while True:
-#        st1 = threading.Thread(target=stepper_worker, args=(stepper1, NUM_STEPS, Adafruit_MotorHAT.FORWARD, STEP_STYLE))
-#        st1.start()
-#        st3 = threading.Thread(target=stepper_worker, args=(stepper2, NUM_STEPS, Adafruit_MotorHAT.FORWARD, STEP_STYLE))
-#        st3.start()
-#        time.sleep(2)
-#
-#        st1 = threading.Thread(target=stepper_worker, args=(stepper1, NUM_STEPS, Adafruit_MotorHAT.BACKWARD, STEP_STYLE))
-#        st1.start()
-#        st4 = threading.Thread(target=stepper_worker, args=(stepper2, NUM_STEPS, Adafruit_MotorHAT.BACKWARD, STEP_STYLE))
-#        st4.start()
-#        time.sleep(2)
+    return_steppers()
