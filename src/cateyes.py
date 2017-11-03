@@ -5,16 +5,20 @@ from gpiozero import LED
 
 led = LED(18)
 
+
 def toggle_light(status):
     led.on() if status else led.off()
 
-def openEyes():
+
+def open_eyes():
     toggle_light(True)
 
-def closeEyes():
+
+def close_eyes():
     toggle_light(False)
 
+
 if __name__ == "__main__":
-    openEyes()
+    open_eyes()
     sleep(2)
-    closeEyes()
+    close_eyes()

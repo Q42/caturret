@@ -4,7 +4,7 @@ import time
 import atexit
 import threading
 
-from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
+from Adafruit_MotorHAT import Adafruit_MotorHAT
 
 STEP_SIZE = 200
 STEP_SPEED = 250        # Speed of rotation (max = 200?)
@@ -91,6 +91,7 @@ def return_steppers():
 
 
 if __name__ == "__main__":
+    init()
     move_steppers(50, 50)
     time.sleep(2)
     return_steppers()
