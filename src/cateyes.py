@@ -3,7 +3,7 @@
 from time import sleep
 from gpiozero import LED
 
-led = LED(18)
+led = LED(13)
 
 
 def toggle_light(status):
