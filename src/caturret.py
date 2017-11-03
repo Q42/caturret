@@ -8,14 +8,13 @@ import threading
 
 # Motor settings
 STEP_SIZE = 200
-STEP_SPEED = 250
+STEP_SPEED = 250        # Speed of rotation (max = 200?)
 
-NUM_STEPS = 40
+NUM_STEPS = 10          # 50 = 1/4 circle
+STEP_STYLE = Adafruit_MotorHAT.DOUBLE
 
 # create a default object, no changes to I2C address or frequency
 mh = Adafruit_MotorHAT(addr = 0x60)
-
-
 
 # recommended for auto-disabling motors on shutdown!
 def turnOffMotors():
@@ -41,12 +40,16 @@ stepper2 = mh.getStepper(STEP_SIZE, 2)       # 200 steps/rev, motor port #1
 stepper1.setSpeed(STEP_SPEED)
 stepper2.setSpeed(STEP_SPEED)
 
-st1 = threading.Thread(target=stepper_worker, args=(stepper1, NUM_STEPS, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE))
-st1.start()
 
-time.sleep(2)
-st1 = threading.Thread(target=stepper_worker, args=(stepper1, NUM_STEPS, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE))
+while True:
+        st1 = threading.Thread(target=stepper_worker, args=(stepper1, NUM_STEPS, Adafruit_MotorHAT.FORWARD, STEP_STYLE))
+        st1.start()
+        st3 = threading.Thread(target=stepper_worker, args=(stepper2, NUM_STEPS, Adafruit_MotorHAT.FORWARD, STEP_STYLE))
+        st3.start()
+        time.sleep(2)
 
-
-#st2 = threading.Thread(target=stepper_worker, args=(stepper2, 1000, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE))
-#st2.start()
+        st1 = threading.Thread(target=stepper_worker, args=(stepper1, NUM_STEPS, Adafruit_MotorHAT.BACKWARD, STEP_STYLE))
+        st1.start()
+        st4 = threading.Thread(target=stepper_worker, args=(stepper2, NUM_STEPS, Adafruit_MotorHAT.BACKWARD, STEP_STYLE))
+        st4.start()
+        time.sleep(2)
