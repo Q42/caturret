@@ -12,12 +12,7 @@ STEP_SPEED = 250        # Speed of rotation (max = 200?)
 
 NUM_STEPS = 10          # 50 = 1/4 circle
 STEP_STYLE = Adafruit_MotorHAT.DOUBLE
-lastX = 0
-lastY = 0
-
-stepper1 = None
-stepper2 = None
-mh = None
+global lastX, lastY, stepper1, stepper2, mh
 
 def init():
         #
@@ -57,7 +52,7 @@ def moveSteppers(x, y):
         maxHorizontal = 25 #max uitwijking 1 kant op
         inputMaxX = 512
         stepsX = (x / (inputMaxX / (maxHorizontal *2))) - maxHorizontal
-        lastX = lastX
+        lastX = stepsX
 
         #Calculate vertical steps, we start in a 45degree position
         maxVertical = 25
@@ -70,7 +65,7 @@ def moveSteppers(x, y):
 
 def moveHorizontal(steps):
         horDirection = Adafruit_MotorHAT.FORWARD
-        if(steps < 0)
+        if(steps < 0):
                 horDirection = Adafruit_MotorHAT.BACKWARD
                 steps = steps * -1
         
@@ -79,7 +74,7 @@ def moveHorizontal(steps):
 
 def moveVertical(steps):
         verDirection = Adafruit_MotorHAT.FORWARD
-        if(steps < 0)
+        if(steps < 0):
                 verDirection = Adafruit_MotorHAT.BACKWARD
                 steps = steps * -1
         
@@ -93,7 +88,7 @@ def returnSteppers():
 
 if __name__ == "__main__":
     moveSteppers(50, 50)
-    sleep(2)
+    time.sleep(2)
     returnSteppers()
 
 
