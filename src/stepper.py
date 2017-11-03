@@ -101,7 +101,7 @@ def return_steppers():
 
 
 if __name__ == "__main__":
-    #init(100,100)
+    init(100,100)
     #move_steppers(50, 50)
     #time.sleep(2)
     #return_steppers()
