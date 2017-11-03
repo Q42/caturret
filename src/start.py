@@ -16,7 +16,8 @@ def main():
 def on_target(target):
     print "target=%s" % str(target)
     open_eyes()
-    move_steppers(10, 10)
+    #move_steppers(10, 10)
+    demo_steppers()
     start_spray()
     # makeNoise("mwuHahaha")
     stop_spray()
