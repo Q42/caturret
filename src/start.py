@@ -7,6 +7,13 @@ def main():
 
 def on_target(target):
     print "target=%s" % str(target)
+    # lightUpEyes()
+    # moveSteppers(x, y)
+    # releaseRelais()
+    # makeNoise("mwuHahaha")
+    # closeRelais()
+    # returnSteppers()
+    # closeEyes()
 
 
 if __name__ == "__main__":
