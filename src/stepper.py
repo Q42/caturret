@@ -6,16 +6,31 @@ import threading
 
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
 
-
-# Motor settings
+#Motor settings
 STEP_SIZE = 200
 STEP_SPEED = 250        # Speed of rotation (max = 200?)
 
 NUM_STEPS = 10          # 50 = 1/4 circle
 STEP_STYLE = Adafruit_MotorHAT.DOUBLE
+lastX = 0
+lastY = 0
 
-# create a default object, no changes to I2C address or frequency
-mh = Adafruit_MotorHAT(addr = 0x60)
+stepper1 = None
+stepper2 = None
+mh = None
+
+def init():
+        #
+        # create a default object, no changes to I2C address or frequency
+        mh = Adafruit_MotorHAT(addr = 0x60)
+
+        atexit.register(turnOffMotors)
+
+        stepper1 = mh.getStepper(STEP_SIZE, 1)       # 200 steps/rev, motor port #1
+        stepper2 = mh.getStepper(STEP_SIZE, 2)       # 200 steps/rev, motor port #1
+
+        stepper1.setSpeed(STEP_SPEED)
+        stepper2.setSpeed(STEP_SPEED)
 
 # recommended for auto-disabling motors on shutdown!
 def turnOffMotors():
@@ -24,25 +39,19 @@ def turnOffMotors():
         mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
         mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
 
-atexit.register(turnOffMotors)
+
 
 # Adafruit_MotorHAT.FORWARD / Adafruit_MotorHAT.BACKWARD
 
-stepstyles = [Adafruit_MotorHAT.SINGLE, Adafruit_MotorHAT.DOUBLE, Adafruit_MotorHAT.INTERLEAVE, Adafruit_MotorHAT.MICROSTEP]
+#stepstyles = [Adafruit_MotorHAT.SINGLE, Adafruit_MotorHAT.DOUBLE, Adafruit_MotorHAT.INTERLEAVE, Adafruit_MotorHAT.MICROSTEP]
 
 def stepper_worker(stepper, numsteps, direction, style):
     #print("Steppin!")
     stepper.step(numsteps, direction, style)
     #print("Done")
 
-stepper1 = mh.getStepper(STEP_SIZE, 1)       # 200 steps/rev, motor port #1
-stepper2 = mh.getStepper(STEP_SIZE, 2)       # 200 steps/rev, motor port #1
 
-stepper1.setSpeed(STEP_SPEED)
-stepper2.setSpeed(STEP_SPEED)
 
-lastX = 0
-lastY = 0
 def moveSteppers(x, y):
         #Calculate horizontal steps, max left = 25, max right is 25, 
         maxHorizontal = 25 #max uitwijking 1 kant op

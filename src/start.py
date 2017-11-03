@@ -1,12 +1,13 @@
 from motion_detector import monitor
 from cateyes import openEyes, closeEyes
 from pump import startSpray, stopSpray
-from stepper import moveSteppers, returnSteppers
+from stepper import init, moveSteppers, returnSteppers
 
 LED_PIN = 18
 RELAIS_PIN = 11
 
 def main():
+    init()
     monitor(on_target)
 
 
