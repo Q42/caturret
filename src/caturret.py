@@ -30,6 +30,9 @@ def stepper_worker(stepper, numsteps, direction, style):
 stepper1 = mh.getStepper(200, 1)       # 200 steps/rev, motor port #1
 stepper2 = mh.getStepper(200, 2)       # 200 steps/rev, motor port #1
 
+stepper1.setSpeed(50)
+stepper2.setSpeed(50)
+
 st1 = threading.Thread(target=stepper_worker, args=(stepper1, 1000, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE))
 st1.start()
 
