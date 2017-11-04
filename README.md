@@ -9,8 +9,18 @@ Caturret w00tcamp 2017
 
 Add `bcm2835-v4l2` to `/etc/modules` to ensure v4l loads at boot time
 
+
+## Packages
+- Linux
+  - See OpenCV install link above for package list
+  - Pygame dependencies: `sudo apt-get build-dep python-pygame`
+- Python
+  - `pip install -r requirements.txt`
+
 ## Part list
 
 - [Adafruit DC & Stepper Motor HAT for Raspberry Pi](https://www.adafruit.com/product/2348)
 - [Stepper motor - NEMA-17 size - 200 steps/rev, 12V 350mA](https://www.adafruit.com/product/324)
 - [Two-channel 5V relais module](https://www.kiwi-electronics.nl/tweekanaals-relais-module-5v)
+- [Raspberry Pi Camera Board](https://www.adafruit.com/product/3099)
+- 

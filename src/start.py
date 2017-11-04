@@ -38,8 +38,8 @@ def on_target(target):
         move_steppers(target[0], target[1])        
         # demo_steppers()  # Only used if no camera available, instead of move_steppers()
         start_spray()
+        # The sound is thread-blocking, so it also serves as interval timer
         play_random_sound()
-        time.sleep(SPRAY_DURATION)
         stop_spray()
         return_steppers()
         close_eyes()
