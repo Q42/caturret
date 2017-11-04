@@ -76,10 +76,10 @@ def move_steppers(x, y):
 
 
 def move_horizontal(steps):
-    hor_direction = Adafruit_MotorHAT.FORWARD
+    hor_direction = Adafruit_MotorHAT.BACKWARD
 
     if steps < 0:
-        hor_direction = Adafruit_MotorHAT.BACKWARD
+        hor_direction = Adafruit_MotorHAT.FORWARD
         steps = steps * -1
         
     stepper1.step(steps, hor_direction, STEP_STYLE)
