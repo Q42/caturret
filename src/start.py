@@ -1,8 +1,10 @@
+import time, sys
+
 from motion_detector import monitor
 from cateyes import open_eyes, close_eyes
 from pump import start_spray, stop_spray
 from stepper import init, move_steppers, return_steppers, demo_steppers
-import time
+
 
 # Camera dimensions
 width = 512
@@ -19,10 +21,10 @@ LED_PIN = 27      # FIXME: Use this to init cateyes.py
 RELAIS_PIN = 17   # FIXME: Use this to init pump.py
 
 
-def main():
+def main(headless):
     global width, height
     init(width, height)
-    monitor(on_target, width, height)
+    monitor(on_target, width, height, headless)
 
 
 def on_target(target):
@@ -47,7 +49,8 @@ def should_fire():
 
 
 if __name__ == "__main__":
-    main()
+    #print "Received args: %s" % sys.argv
+    main(len(sys.argv) > 1)
     
     # Demo crud (if no camera is available)
     # init(100, 100)

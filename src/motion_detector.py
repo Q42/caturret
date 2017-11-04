@@ -4,7 +4,7 @@ import time
 import cv2
 
 
-def monitor(callback, w, h):
+def monitor(callback, w, h, headless):
 
     camera = cv2.VideoCapture(0)
     time.sleep(0.25)
@@ -49,7 +49,8 @@ def monitor(callback, w, h):
             cv2.circle(frame, target, 10, (0, 0, 255), 2)
             callback(target)
 
-        cv2.imshow("caturret", frame)
+        if not headless:
+            cv2.imshow("caturret", frame)
 
         frame_delta = cv2.merge([frame_delta, frame_delta, frame_delta])
         thresh = cv2.merge([thresh, thresh, thresh])
