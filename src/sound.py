@@ -19,5 +19,5 @@ def play_random_sound():
     except:
         pass
 
-
-play_random_sound()
+if __name__ == "__main__":
+    play_random_sound()

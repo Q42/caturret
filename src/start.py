@@ -3,6 +3,7 @@ import time, sys
 from motion_detector import monitor
 from cateyes import open_eyes, close_eyes
 from pump import start_spray, stop_spray
+from sound import play_random_sound
 from stepper import init, move_steppers, return_steppers, demo_steppers
 
 
@@ -37,7 +38,7 @@ def on_target(target):
         move_steppers(target[0], target[1])        
         # demo_steppers()  # Only used if no camera available, instead of move_steppers()
         start_spray()
-        # makeNoise("mwuHahaha")
+        play_random_sound()
         time.sleep(SPRAY_DURATION)
         stop_spray()
         return_steppers()
