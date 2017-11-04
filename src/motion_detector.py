@@ -45,7 +45,7 @@ def monitor(callback, w, h):
 
         if max_area > 100:
             # cv2.rectangle(frame, (max_x, max_y), (max_x + max_w, max_y + max_h), (0, 0, 255), 2)
-            target = (max_x + (max_w / 2), max_y + (max_h / 2))
+            target = [max_x + (max_w / 2), max_y + (max_h / 2)]
             cv2.circle(frame, target, 10, (0, 0, 255), 2)
             callback(target)
 
