@@ -72,7 +72,7 @@ def move_steppers(x, y):
     last_y = steps_y
 
     move_horizontal(steps_x)
-    move_vertical(steps_y)
+    #move_vertical(steps_y)
 
 
 def move_horizontal(steps):
@@ -82,8 +82,7 @@ def move_horizontal(steps):
         hor_direction = Adafruit_MotorHAT.BACKWARD
         steps = steps * -1
         
-    st1 = threading.Thread(target=stepper_worker, args=(stepper1, steps, hor_direction, STEP_STYLE))
-    st1.start()
+    stepper1.step(steps, hor_direction, STEP_STYLE)
 
 
 def move_vertical(steps):
@@ -100,7 +99,7 @@ def move_vertical(steps):
 def return_steppers():
     global last_y, last_x
     move_horizontal(last_x * -1)
-    move_vertical(last_y * -1)
+    #move_vertical(last_y * -1)
 
 
 if __name__ == "__main__":
